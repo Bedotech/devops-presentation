@@ -50,6 +50,18 @@
 					</ul>
 				</section>
 
+				<section>
+					<section>
+						<h3>prerequisito:</h3> <h1>GIT</h1>
+						<p>fondamentale all'automazione e un modo solido di interazione con il codice</p>
+					</section>
+					<section>
+						<h4><a href="https://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a></h4>
+						<img src="https://nvie.com/img/git-model@2x.png" alt="A successful Git branching model">
+					</section>
+
+				</section>
+
 				<!-- Infrastruttura section -->
 				<section>
 					<section>
@@ -140,6 +152,56 @@
 							<li>Gitlab-CI</li>
 							<li>Travis</li>
 						</ul>
+					</section>
+
+					<section>
+						<h2>Jenkins</h2>
+						<p>come sono composte le pipeline?</p>
+						<pre><code class="groovy" data-trim contenteditable>
+pipeline {
+    agent {
+        docker {
+            image 'maven:3-alpine'
+            args '-v $HOME/.m2:/root/.m2'
+        }
+    }
+    stages {
+        stage('compile') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+    }
+}
+						</code></pre>
+
+						<a href="https://github.com/Bedotech/java-example/blob/master/Jenkinsfile" class="fragment">esempio</a>
+					</section>
+
+					<section>
+						<h2>Una pipeline è composta da:</h2>
+						<ul>
+							<li class="fragment">pipeline, metadata description su cosa bisogna fare</li>
+							<li class="fragment">agent, definizione su dove il lavoro deve essere svolto</li>
+							<li class="fragment">step, unita minima di lavoro, con comandi shell</li>
+							<li class="fragment">stages, raggruppamento logico di più step</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Esercizio guidato:</h2>
+						<p>importiamo un progetto da github, eseguiamo la sua build all'interno del container.</p>
+						<div class="fragment">
+							<h2>Esercizio:</h2>
+							<p>Aggiungamo l'esecuzione dei test, verifichiamo che github non permetta il merge.</p>
+						</div>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Misurazione</h2>
+						<p>Automatizzando dobbiamo avere il polso della situazione... <em class="fragment">in tempo reale!</em></p>
+						<h3 class="fragment">WIP!</h3>
 					</section>
 				</section>
 			</div>
