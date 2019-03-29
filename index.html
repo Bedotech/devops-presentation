@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Devops</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
@@ -24,8 +24,124 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section data-markdown>
+					<textarea data-template>
+						# Corso Devops
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						# Chi sono
+
+						## Mattia Rossi
+						CTO [Criptalia](https://criptalia.com)
+
+						mattia.rossi@criptalia.it
+					</textarea>
+				</section>
+
+				<section>
+					<h3>Differenti livelli di automazione:</h3>
+					<ul>
+						<li class="fragment">Infrastruttura</li>
+						<li class="fragment">Delivery</li>
+						<li class="fragment">Misurazione</li>
+					</ul>
+				</section>
+
+				<!-- Infrastruttura section -->
+				<section>
+					<section>
+						<h2>Infrastruttura</h2>
+						<p>La creazione dell'infrastruttura è il primo step</p>
+						<ul>
+							<li class="fragment">Ambienti ricreabili</li>
+							<li class="fragment">Infrastructure as a code</li>
+							<li class="fragment">Scalabilità</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Tools:</h2>
+						<ul>
+							<li class="fragment">Ansible</li>
+							<li class="fragment">Puppet</li>
+							<li class="fragment">Chef</li>
+						</ul>
+
+					</section>
+					<section>
+						<h2>Code</h2>
+						<p>ansible example</p>
+						<pre><code class="yaml" data-trim contenteditable>
+- name: Install Mysql package
+  apt: name={{ item }} state=present
+  with_items:
+   - mysql-server
+						</code></pre>
+
+						<p class="fragment">caratteristiche:</p>
+						<ul>
+							<li class="fragment">Idempotenza</li>
+							<li class="fragment">Stato descritto versus stato attuale</li>
+							<li class="fragment">Codice</li>
+						</ul>
+						<br>
+						<a href="https://github.com/ansible/ansible-examples/tree/master/wordpress-nginx" class="fragment">esempio</a>
+					</section>
+					<section>
+						<h3>Run</h3>
+						<a href="https://asciinema.org/a/237541" target="_blank"><img src="https://asciinema.org/a/237541.svg" /></a>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Delivery</h2>
+						<p>L'automazione di tutto il flusso di sviluppo:</p>
+						<ul>
+							<li class="fragment">Build</li>
+							<li class="fragment">Packaging</li>
+							<li class="fragment">Deployment</li>
+						</ul>
+					</section>
+
+					<section>
+						<h1>Obbiettivo: Dal commit alla produzione</h1>
+					</section>
+
+					<section>
+						<h2>Build</h2>
+						<ul>
+							<li>Testing</li>
+							<li>Ripetibile</li>
+							<li>Veloce</li>
+						</ul>
+						<p>il processo <strong>non deve</strong> prevedere interazione umana</p>
+					</section>
+
+					<section>
+						<h2>Packaging</h2>
+						<ul>
+							<li>Docker image</li>
+							<li>Pubblicazione su maven</li>
+							<li>Generazione dei pacchetti di installazione</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Deployment</h2>
+						<p>il deployment è il processo che consegna il valore al <em>cliente</em>, per sua natura ogni prodotto ha un proprio procedimento di deployment</p>
+					</section>
+					<section>
+						<h2>Tools:</h2>
+						<ul>
+							<li>Jenkins</li>
+							<li>Gitlab-CI</li>
+							<li>Travis</li>
+						</ul>
+					</section>
+				</section>
 			</div>
 		</div>
 
