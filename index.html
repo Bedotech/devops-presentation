@@ -28,17 +28,9 @@
 					<textarea data-template>
 						# Corso Devops
 					</textarea>
-				</section>
-
-				<section data-markdown>
-					<textarea data-template>
-						# Chi sono
-
-						## Mattia Rossi
-						CTO [Criptalia](https://criptalia.com)
-
-						mattia.rossi@criptalia.it
-					</textarea>
+					<aside class="notes">
+						Speaker notes activated!
+					</aside>
 				</section>
 
 				<section>
@@ -54,10 +46,17 @@
 					<section>
 						<h3>prerequisito:</h3> <h1>GIT</h1>
 						<p>fondamentale all'automazione e un modo solido di interazione con il codice</p>
+						<aside class="notes">
+							brevissima storia dell'evoluzione dei sistemi di controllo del codice
+							sorgente, CVS, SVN, GIT, breve citazione di linux torvald creato nel 2005.
+						</aside>
 					</section>
 					<section>
 						<h4><a href="https://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a></h4>
 						<img src="https://nvie.com/img/git-model@2x.png" alt="A successful Git branching model">
+						<aside class="notes">
+							portare esempi di tagging per dividere produzione e staging
+						</aside>
 					</section>
 
 				</section>
@@ -72,6 +71,13 @@
 							<li class="fragment">Infrastructure as a code</li>
 							<li class="fragment">Scalabilità</li>
 						</ul>
+						<aside class="notes">
+							<ul>
+								<li>esempio di creazione ambienti e difficolta relative ad avere sistemi semplici</li>
+								<li>legare una persona ad un ambiente poca scalabilita</li>
+								<li>impossibilita di testare minimi cambiamenti o aggiornamenti distruttivi</li>
+							</ul>
+						</aside>
 					</section>
 
 					<section>
@@ -81,7 +87,16 @@
 							<li class="fragment">Puppet</li>
 							<li class="fragment">Chef</li>
 						</ul>
+						<aside class="notes">
+							pro e contro dei singoli sistemi, modello di esecuzione.
+							<ul>
+								<li>ansible, agent less, ssh, YAML, file based</li>
+								<li>puppet, agent based, repository synced, ruby</li>
+								<li>puppet, agent based or agent less, ruby</li>
+							</ul>
 
+							Spiegare come ci si possa orientare sulla scelta.
+						</aside>
 					</section>
 					<section>
 						<h2>Code</h2>
@@ -101,6 +116,10 @@
 						</ul>
 						<br>
 						<a href="https://github.com/ansible/ansible-examples/tree/master/wordpress-nginx" class="fragment">esempio</a>
+						<a href="https://docs.ansible.com/ansible/latest/user_guide/windows_faq.html#can-ansible-run-on-windows">resource</a>
+						<aside class="notes">
+							controllare che sia installato Windows Subsystem for Linux, dopo di che se interessati procedere facendoli connettere ad un mio container.
+						</aside>
 					</section>
 					<section>
 						<h3>Run</h3>
@@ -117,6 +136,14 @@
 							<li class="fragment">Packaging</li>
 							<li class="fragment">Deployment</li>
 						</ul>
+						<aside class="notes">
+							<p>Spiegare che delivery non e il termine adatto</p>
+							<ul>
+								<li>le build giornaliere sono tue amiche</li>
+								<li>Edit-Compile-Test</li>
+								<li>Report-Fix-Retest</li>
+							</ul>
+						</aside>
 					</section>
 
 					<section>
@@ -131,6 +158,15 @@
 							<li>Veloce</li>
 						</ul>
 						<p>il processo <strong>non deve</strong> prevedere interazione umana</p>
+						<aside class="notes">
+							<ul>
+								<li>ogni elemento deve essere necessariamente gestito automaticamente, pubblicazione multi lingua etc..</li>
+								<li>Automatizzare tutta la filiera riduce il tempo per gli hotfix</li>
+								<li>Quando si inceppa l'automatismo sistemarlo SUBITO, una gestione automatica che non funziona e peggio di nessuna gestione automatica</li>
+								<li>gestire il processo di build</li>
+								<li>gestire il processo di build</li>
+							</ul>
+						</aside>
 					</section>
 
 					<section>
@@ -140,10 +176,17 @@
 							<li>Pubblicazione su maven</li>
 							<li>Generazione dei pacchetti di installazione</li>
 						</ul>
+						<aside class="notes">
+							<p>stessi concetti di prima</p>
+						</aside>
 					</section>
 					<section>
 						<h2>Deployment</h2>
 						<p>il deployment è il processo che consegna il valore al <em>cliente</em>, per sua natura ogni prodotto ha un proprio procedimento di deployment</p>
+						<aside class="notes">
+							<p>automatizarre la messa in produzione e un concetto relativamente nuovo</p>
+							<p>il valore dato dal poter fare rilasci multi e enorme, ma rimane molto vincolato all'architettura.</p>
+						</aside>
 					</section>
 					<section>
 						<h2>Tools:</h2>
@@ -152,6 +195,13 @@
 							<li>Gitlab-CI</li>
 							<li>Travis</li>
 						</ul>
+						<aside class="notes">
+							<p>breve cenno sui sistemi di build e come questi fossero slegati dal codice.</p>
+							<ul>
+								<li>Jenkins, agent based, slegato dal CSV, duttilita</li>
+								<li>GilabCI puro YAML, meno liberta, legato direttamente al codice</li>
+							</ul>
+						</aside>
 					</section>
 
 					<section>
@@ -174,8 +224,21 @@ pipeline {
     }
 }
 						</code></pre>
-
 						<a href="https://github.com/Bedotech/java-example/blob/master/Jenkinsfile" class="fragment">esempio</a>
+					</section>
+
+					<section>
+						<h2>Jenkins</h2>
+						<p>sintassi <em>'scripted'</em></p>
+						<pre><code class="groovy" data-trim contenteditable>
+node {
+    stage('compile') {
+        docker.image('maven:3.6.0-jdk-11-slim').inside('-v $HOME/.m2:/root/.m2') {
+            sh 'mvn compile'
+        }
+    }
+}
+						</code></pre>
 					</section>
 
 					<section>
@@ -187,6 +250,7 @@ pipeline {
 							<li class="fragment">stages, raggruppamento logico di più step</li>
 						</ul>
 					</section>
+
 					<section>
 						<h2>Esercizio guidato:</h2>
 						<p>importiamo un progetto da github, eseguiamo la sua build all'interno del container.</p>
@@ -195,13 +259,59 @@ pipeline {
 							<p>Aggiungamo l'esecuzione dei test, verifichiamo che github non permetta il merge.</p>
 						</div>
 					</section>
+
+					<section>
+						<p>cose complicate:</p>
+						<pre><code class="groovy" data-trim contenteditable>
+def call(Map args = [:]) {
+  def cores = args.get('cores', Runtime.getRuntime().availableProcessors())
+  def coverageEnabled = args.get('coverageEnabled', false)
+
+  stage('test') {
+    docker.image('postgres:9.6').withRun('-e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres') { c ->
+      docker.image('postgres:9.6').inside("--link ${c.id}:db -e PGPASSWORD=postgres") {
+        sh 'until psql -h db -U postgres -d postgres -c "select 1" > /dev/null 2>&1 ; do echo "Waiting for postgres server"; sleep 2; done'
+        sh "createdb -h db -p 5432 -U postgres -w example"
+      }
+
+      docker.image('acando14/php7.3-cli-test').inside("--link ${c.id}:db --volume /opt/cache/composer:/.composer -e APP_ENV=test -e PGPASSWORD=postgres") {
+        withEnv([
+                'POSTGRES_DB_HOST=db:5432'
+        ]) {
+          sh "sed -i 's/localhost:5432/db:5432/g' phpunit.xml.dist"
+          sh "composer install --no-interaction --no-plugins --no-scripts"
+          sh "php bin/console doctrine:database:create -n --env=test --if-not-exists"
+          sh "php bin/console doctrine:schema:create -n --env=test"
+          sh "php bin/console doctrine:fixtures:load --env=test --no-interaction"
+
+          def params = [
+            "./vendor/bin/simple-phpunit",
+            "-d memory_limit=-1 ",
+            "-d apc.enable_cli=1",
+            coverageEnabled ? "--coverage-clover phpunit.coverage.xml --log-junit phpunit.report.xml" : "",
+            "--configuration ./phpunit.xml.dist"
+          ]
+          sh params.join(' ')
+        }
+      }
+    }
+  }
+}
+						</code></pre>
+					</section>
 				</section>
 
 				<section>
 					<section>
 						<h2>Misurazione</h2>
 						<p>Automatizzando dobbiamo avere il polso della situazione... <em class="fragment">in tempo reale!</em></p>
-						<h3 class="fragment">WIP!</h3>
+					</section>
+
+					<section>
+					<blockquote cite="https://aforismi.meglio.it/aforisma.htm?id=5a8f">
+						&ldquo;Misura ciò che è misurabile, e rendi misurabile ciò che non lo è.&rdquo;
+					</blockquote>
+					<h4><em>Galileo Galilei</em></h4>
 					</section>
 				</section>
 			</div>
